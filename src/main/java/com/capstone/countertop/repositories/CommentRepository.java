@@ -14,6 +14,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long>{
 
     List<Comment> findAllByRecipe(Recipe id);
 
+    List<Comment> findAllByApiId(long id);
+
     //List<Comment> findAllByDate(Date date);
 
     @Query("FROM Comment c WHERE c.commentBody LIKE %:term%")

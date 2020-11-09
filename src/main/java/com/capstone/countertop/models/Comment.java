@@ -40,6 +40,9 @@ public class Comment {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
+    @Column(name = "api_id")
+    private long apiId;
+
     //foreign comment_id key for likes table
     @OneToMany(cascade = CascadeType.ALL, mappedBy="comment")
     private List<Like> likes;
@@ -62,6 +65,14 @@ public class Comment {
         this.user = user;
         this.recipe = recipe;
         this.likes = likes;
+    }
+
+    public long getApiId() {
+        return apiId;
+    }
+
+    public void setApiId(long apiId) {
+        this.apiId = apiId;
     }
 
     public List<Like> getLikes() {
