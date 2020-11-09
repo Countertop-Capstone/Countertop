@@ -60,6 +60,7 @@ public class RecipeController {
         model.addAttribute("recipe", recipeRepository.getOne(id));
         model.addAttribute("comment", new Comment());
         model.addAttribute("comments", commentRepository.findAllByRecipe(recipeRepository.getOne(id)));
+        model.addAttribute("apiRecipe", false);
         if(user != null) {
             User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             current = userRepository.getOne(current.getId());
@@ -188,7 +189,8 @@ public class RecipeController {
         try {
             model.addAttribute("recipe",Api.getRecipe("https://api.spoonacular.com/recipes/"+ id +"/information?includeNutrition=false"));
             model.addAttribute("comment", new Comment());
-            model.addAttribute("comments", commentRepository.findAllByRecipe(recipeRepository.getOne(id)));
+            model.addAttribute("comments", commentRepository.findAllByApiId(id));
+            model.addAttribute("apiRecipe", true);
         } catch(Exception e) {
             e.printStackTrace();
         }
