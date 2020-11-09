@@ -5,6 +5,7 @@ import com.capstone.countertop.repositories.IngredientRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Help {
     public static List<Ingredient> parseIngredients(String ingredients) {
@@ -23,7 +24,17 @@ public class Help {
         for(Ingredient ingredient : ingredientList) {
             System.out.println(ingredient.getName());
         }
-
+        ingredientList.remove(ingredientList.size() -1);
         return ingredientList;
     }
+
+    public static String[] parseInstructions(String instructions){
+        String[] instructionArray = instructions.split(Pattern.quote("."));
+        for (String instruction: instructionArray){
+            System.out.println(instruction);
+        }
+        return instructionArray;
+
+    }
 }
+

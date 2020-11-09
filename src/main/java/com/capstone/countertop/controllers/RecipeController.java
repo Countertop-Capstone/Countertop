@@ -58,6 +58,7 @@ public class RecipeController {
         model.addAttribute("featured2", featured2);
 
         model.addAttribute("recipe", recipeRepository.getOne(id));
+        model.addAttribute("instructions", Help.parseInstructions(recipeRepository.getOne(id).getInstructions()));
         model.addAttribute("comment", new Comment());
         model.addAttribute("comments", commentRepository.findAllByRecipe(recipeRepository.getOne(id)));
         if(user != null) {
