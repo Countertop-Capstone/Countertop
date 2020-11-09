@@ -1,33 +1,40 @@
 package com.capstone.countertop.controllers;
 
+import com.capstone.countertop.models.ApiRecipe;
+import com.capstone.countertop.models.Favorite;
+import com.capstone.countertop.models.Recipe;
+import com.capstone.countertop.repositories.FavoriteRepository;
 import com.capstone.countertop.repositories.RecipeRepository;
 import com.capstone.countertop.repositories.UserRepository;
+import com.capstone.countertop.services.Api;
+import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.capstone.countertop.models.User;
-import com.capstone.countertop.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
     private final UserRepository userDao;
     private final PasswordEncoder passwordEncoder;
     private final RecipeRepository recipeDao;
+    private final FavoriteRepository favoriteRepository;
 
 
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, RecipeRepository recipeDao) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, RecipeRepository recipeDao, FavoriteRepository favoriteRepository) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.recipeDao = recipeDao;
-
+        this.favoriteRepository = favoriteRepository;
     }
 
 
@@ -90,19 +97,40 @@ public class UserController {
     public String showFavorites(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user = userDao.getOne(user.getId());
-        System.out.println(user.getUsersFavorites());
-        model.addAttribute("favorites", user.getUsersFavorites());
+
+        List<Favorite> favorites = user.getUsersFavorites();
+        List<Long> recipeIds = new ArrayList<>();
+        List<Recipe> favoriteRecipes = new ArrayList<>();
+        List<Long> apiRecipeIds = new ArrayList<>();
+        List<ApiRecipe> favoriteApiRecipes = new ArrayList<>();
+
+        for (Favorite favorite : favorites) {
+            if (favorite.isApiRecipe()) {
+                apiRecipeIds.add(favorite.getRecipeId());
+            } else {
+                recipeIds.add(favorite.getRecipeId());
+            }
+        }
+
+        for(Long id : recipeIds) {
+            favoriteRecipes.add(recipeDao.getOne(id));
+        }
+
+        model.addAttribute("favoriteRecipes", favoriteRecipes);
+        if (!apiRecipeIds.isEmpty()) {
+            try {
+                model.addAttribute("favoriteApiRecipes", Api.getBulkRecipeInformation("https://api.spoonacular.com/recipes/informationBulk?ids=", apiRecipeIds));
+            } catch (Error | InterruptedException | ParseException | IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         return "/users/favorites";
     }
 
     @GetMapping("/about")
     public String aboutUs(){
-        return "/aboutUs";
+        return "aboutUs";
     }
-
-
-
-
 
 }

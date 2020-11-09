@@ -83,7 +83,7 @@ VALUES
 
 
 
-INSERT INTO users_favorites(user_id, recipe_id)
+INSERT INTO users_favorites(user_id)
 VALUES (3, 2),
        (3, 3),
        (3, 4),
