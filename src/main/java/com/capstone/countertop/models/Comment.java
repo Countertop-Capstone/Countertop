@@ -30,6 +30,9 @@ public class Comment {
     @Column
     private Boolean liked;
 
+    @Column
+    private long api_id;
+
     //user_id foreign key
     @ManyToOne
     @JoinColumn(name = "user_id")
