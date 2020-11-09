@@ -61,14 +61,22 @@ public class AuthenticationController {
     }
 
     @PostMapping("/comment")
-    public String comment(@ModelAttribute Comment comment, @RequestParam(name="recipeID") long id) {
+    public String comment(@ModelAttribute Comment comment, @RequestParam(name="recipeID") long id, @RequestParam boolean apiRecipe) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         java.util.Date date = new java.util.Date();
         comment.setUser(userRepository.getOne(user.getId()));
-        comment.setRecipe(recipeRepository.getOne(id));
+        if (apiRecipe)
+            comment.setApiId(id);
+        else
+            comment.setRecipe(recipeRepository.getOne(id));
         comment.setDate(date);
 
         commentRepository.save(comment);
-        return "redirect:/recipes/" + id;
+
+        if(apiRecipe) {
+            return "redirect:/recipes/api/" + id;
+        } else {
+            return "redirect:/recipes/" + id;
+        }
     }
 }

@@ -23,15 +23,6 @@
                     <br>
                     <h2 class="play" th:text="${recipe.getTitle()}"></h2>
                     <h6 class="sans">- Recipe Provided by Spoonacular</h6>
-<!--                    <div sec:authorize="isAuthenticated()">-->
-<!--                        <form th:action="@{/recipes/favorite}" method="post">-->
-<!--                            <input type="hidden" th:value="${recipe.getId()}" name="recipeID">-->
-<!--                            <button class="btn btn-primary">-->
-<!--                                <i class="fas fa-star btn btn-primary" th:if="${favorited}">Favorited</i>-->
-<!--                                <i class="far fa-star btn btn-primary" th:if="${not favorited}">Favorite</i>-->
-<!--                            </button>-->
-<!--                        </form>-->
-<!--                    </div>-->
                     <p class="sans" th:utext="${recipe.getDescription()}"></p>
                     <div class="post-content">
                         <div class="recipe-ingredients">
