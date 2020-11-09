@@ -28,9 +28,13 @@ public class Api {
         HttpResponse<String> response =
                 client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.body());
+        System.out.println("RESPONSE");
+        System.out.println(response);
 
         JSONParser parser = new JSONParser();
+
+        System.out.println("BODY RESPONSE");
+        System.out.println(response.body());
 
         return (JSONObject) parser.parse(response.body());
     }
@@ -85,6 +89,56 @@ public class Api {
             ingredient.setId((long) miniObject.get("id"));
             ingredient.setName((String) miniObject.get("name"));
             list.add(ingredient);
+        }
+
+        return list;
+    }
+
+    public static List<ApiRecipe> getBulkRecipeInformation(String uri, List<Long> recipeIds) throws InterruptedException, ParseException, IOException {
+        StringBuilder uriBuilder = new StringBuilder(uri);
+        for(int i=0; i<recipeIds.size(); i++) {
+            if(i == recipeIds.size() - 1) {
+                uriBuilder.append(recipeIds.get(i));
+            } else {
+                uriBuilder.append(recipeIds.get(i)).append(",");
+            }
+        }
+        uri = uriBuilder.toString();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri + key))
+                .build();
+
+        HttpResponse<String> response =
+                client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        JSONParser parser = new JSONParser();
+
+        JSONArray results = (JSONArray) parser.parse(response.body());
+
+//        JSONObject object = getResponse(uri);
+//        JSONArray array = (JSONArray) object.get("results");
+        System.out.println(results);
+
+        List<ApiRecipe> list = new ArrayList<>();
+        for (Object o : results) {
+            JSONObject miniObject = (JSONObject) o;
+            ApiRecipe recipe = new ApiRecipe();
+
+            recipe.setId((long) miniObject.get("id"));
+            recipe.setImage((String) miniObject.get("image"));
+            recipe.setSourceUrl((String) miniObject.get("sourceUrl"));
+            recipe.setInstructions((String) miniObject.get("instructions"));
+            recipe.setTitle((String) miniObject.get("title"));
+            recipe.setDescription((String) miniObject.get("summary"));
+            recipe.setInstructions((String) miniObject.get("instructions"));
+            recipe.setReadyTime((long) miniObject.get("readyInMinutes"));
+            recipe.setServings((long) miniObject.get("servings"));
+            recipe.setSourceUrl((String) miniObject.get("sourceUrl"));
+            recipe.setIngredientList(getIngredients((JSONArray) miniObject.get("extendedIngredients")));
+
+            list.add(recipe);
         }
 
         return list;
