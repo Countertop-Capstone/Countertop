@@ -125,7 +125,7 @@ public class UserController {
             }
         }
 
-        return "/users/favorites";
+        return "users/favorites";
     }
 
     @GetMapping("/about")
