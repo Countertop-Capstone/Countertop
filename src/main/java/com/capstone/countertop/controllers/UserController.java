@@ -117,10 +117,12 @@ public class UserController {
         }
 
         model.addAttribute("favoriteRecipes", favoriteRecipes);
-        try {
-            model.addAttribute("favoriteApiRecipes", Api.getBulkRecipeInformation("https://api.spoonacular.com/recipes/informationBulk?ids=", apiRecipeIds));
-        } catch(Error | InterruptedException | ParseException | IOException e) {
-            e.printStackTrace();
+        if (!apiRecipeIds.isEmpty()) {
+            try {
+                model.addAttribute("favoriteApiRecipes", Api.getBulkRecipeInformation("https://api.spoonacular.com/recipes/informationBulk?ids=", apiRecipeIds));
+            } catch (Error | InterruptedException | ParseException | IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return "/users/favorites";
