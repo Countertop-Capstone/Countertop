@@ -18,7 +18,25 @@
                 <article class="post-single">
                     <div class="post-thumbnail" style="">
                         <img th:src="${recipe.getImage()}" class="img-fluid" alt="Responsive image" style="border-radius: 25px;object-fit: cover; height: 500px; width: 1000px;">
-                        <!--                            <img src="https://via.placeholder.com/1280x700" alt="post">-->
+                    </div>
+                    <br>
+                    <div sec:authorize="isAuthenticated()">
+                        <form th:action="@{/recipes/favorite}" method="post">
+                            <input type="hidden" th:value="${recipe.getId()}" name="recipeID">
+                            <input type="hidden" th:value="${true}" name="apiRecipe">
+                            <button class="btn btn-danger text-left" style="background-color: rgba(221,52,68,.3); border-radius: 15px;">
+                                <i class="fas fa-star sans text-danger text-left" th:if="${favorited}"><span class="text-danger sans"> Favorited</span></i>
+                                <i class="far fa-star sans text-danger text-left" th:if="${not favorited}"><span class="text-danger sans"> Favorite</span></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <form>
+                            <input type="hidden"  name="recipeID">
+                            <a class="btn btn-danger text-left" style="background-color: rgba(221,52,68,.3); border-radius: 15px;" href="/login">
+                                <i class="far fa-star sans text-danger text-left"><span class="text-danger sans"> Favorite</span></i>
+                            </a>
+                        </form>
                     </div>
                     <br>
                     <h2 class="play" th:text="${recipe.getTitle()}"></h2>
@@ -40,7 +58,6 @@
                             </div>
                         </div>
                         <div th:replace="partials/comments :: comments"></div>
-
                     </div>
                 </article>
             </div>
@@ -61,17 +78,6 @@
                     <div class="caption ">
                         <a th:href="@{/recipes/{id}(id=${recipe.getId()})}" class="party centered"></a>
                     </div>
-                </div>
-
-                <div sec:authorize="isAuthenticated()">
-                    <form th:action="@{/recipes/favorite}" method="post">
-                        <input type="hidden" th:value="${recipe.getId()}" name="recipeID">
-                        <input type="hidden" th:value="${true}" name="apiRecipe">
-                        <button class="btn btn-danger text-left" style="background-color: rgba(221,52,68,.3); border-radius: 15px;">
-                            <i class="fas fa-star sans text-danger text-left" th:if="${favorited}"><span class="text-danger sans"> Favorited</span></i>
-                            <i class="far fa-star sans text-danger text-left" th:if="${not favorited}"><span class="text-danger sans"> Favorite</span></i>
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>
