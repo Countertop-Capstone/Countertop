@@ -1,3 +1,7 @@
+/*.about:after {*/
+/*    opacity: 0.5;*/
+/*}*/
+
 .aboutUsBg{
     background-image: url('../images/countertop.jpg');
     background-size: cover;
@@ -5,8 +9,8 @@
 
 .header-img {
     width: 100%;
-    height: 200px;
-    background: url('../images/subheader5.jpg');
+    height: 250px;
+    background: url('../images/subheader4.jpg');
     background-size: cover;
     /*opacity: 0.5;*/
     /*box-shadow: 0 0 8px 8px white inset;*/
