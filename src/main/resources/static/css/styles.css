@@ -40,6 +40,7 @@
 .photo-thumb {
     height: 75px;
     width: 75px;
+    object-fit:cover;
 }
 
 .profile-recipe:hover{
