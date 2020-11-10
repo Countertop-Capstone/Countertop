@@ -122,12 +122,7 @@
     </div>
 
 <!-- RECIPES -->
-<<<<<<< HEAD
-    <div class="container-fluid mx-4 translucent-gray">
-        <div class="my-4">
-            <h4 class="mt-3 text-center" id="theRecipes">THE RECIPES</h4>
-=======
->>>>>>> newProfile
+
 
 
 
@@ -141,7 +136,7 @@
 
                 <div class="border col-4 d-flex mx-2 p-0 smokey-gray" th:each="recipe : ${page}" th:if="${recipeStat.count} >= 1" th:unless="${recipeStat.count} >= 4">
                     <div class="col d-flex">
-                        <div class="border ml-0 my-auto photo-thumb"><img class="photo-thumb" th:src="${recipe.url}" alt="recipe thumbnail" /></div>
+                        <div class="border ml-0 my-auto photo-thumb"><img class="photo-thumb" style="object-fit: cover;" th:src="${recipe.url}" alt="recipe thumbnail" /></div>
                         <div class="border col justify-content-center ml-3 my-auto text-center user-details"><span class="align-middle label-text text-center text-uppercase user-details" th:text="${recipe.name}">Recipe Name</span></div>
                     </div>
                     <div class="col-3">
