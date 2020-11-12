@@ -1,4 +1,32 @@
 /** PROFILE **/
+@media (min-width: 1200px) {
+    .h-xl-300 {
+        height: 300px !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .h-custom-auto {
+        height: auto; !important;
+    }
+    .profile-recipe-btn {
+
+    }
+}
+
+@media (min-width: 576px) {
+    .h-custom-auto {
+        height: auto; !important;
+    }
+    .profile-recipe-btn {
+
+    }
+}
+
+.about-link:hover {
+    color: black; !important;
+    text-decoration: none; !important;
+}
 
 .details-container {
     height: 300px;
@@ -20,6 +48,16 @@
 .label-text {
     font-size: 1.5em;
 }
+
+.navbar-custom-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    background: no-repeat center center url("../images/favicon-32x32.png") ;
+    background-size: 100% 100%;
+}
+
 
 .photo-container {
     min-height: 300px;
@@ -59,12 +97,6 @@
     display: inline-flex;
     align-items: center;
     background-color: whitesmoke;
-}
-
-.white-borders {
-    border-color: white;
-    border-style: solid;
-    border-width: 5px;
 }
 
 /** END PROFILE **/
@@ -4475,7 +4507,7 @@ input[type="button"].btn-block {
     width: 1.5em;
     height: 1.5em;
     vertical-align: middle;
-    content: "";
+    content: url("");
     background: no-repeat center center;
     background-size: 100% 100%;
 }
