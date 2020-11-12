@@ -89,16 +89,16 @@
                 <div class="post-thumbnail thumbnail text-center" style="">
                     <img th:src="${featured.getUrl()}" class="img-fluid" alt="Responsive image" style="border-radius: 25px;object-fit: cover; height: 200px; width: 500px;">
                     <div class="caption">
+                        <a th:href="@{/recipes/{id}(id=${featured.getId()})}" class="centered " style="background-color: black;"><span th:text="${featured.name}" class="play" style="background-color: black; color: white; font-size: 20px;"></span></a>
                     </div>
-                    <a th:href="@{/recipes/{id}(id=${featured.getId()})}" class="centered "><span th:text="${featured.name}" class="play" style=" text-shadow: 4px 4px 8px 3px #000000;color: black; font-size: 20px;"></span></a>
                 </div>
                 <br>
                 <br>
                 <div class="post-thumbnail thumbnail text-center" style="">
                     <img th:src="${featured2.getUrl()}" class="img-fluid" alt="Responsive image" style="border-radius: 25px;object-fit: cover; height: 200px; width: 500px;">
                     <div class="caption ">
+                        <a th:href="@{/recipes/{id}(id=${featured2.getId()})}" class="centered " style="background-color: black;"><span th:text="${featured2.name}" class="play" style=" color: white; font-size: 20px;"></span></a>
                     </div>
-                    <a th:href="@{/recipes/{id}(id=${featured2.getId()})}" class="centered "  ><span th:text="${featured2.name}" class="play" style="text-shadow: 4px 4px 8px 3px #000000;color: black; font-size: 20px;"></span></a>
                 </div>
             </div>
         </div>
